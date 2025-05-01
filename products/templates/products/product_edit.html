@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit {{ product.name }} - Agro-Food Tracker</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Flatpickr (date picker) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: #2c7be5;
+        }
+
+        .card {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            border: none;
+        }
+
+        .card-header {
+            background-color: #fff;
+            border-bottom: 1px solid rgba(0,0,0,.05);
+        }
+
+        .btn-primary {
+            background-color: #2c7be5;
+            border-color: #2c7be5;
+        }
+
+        .btn-success {
+            background-color: #00d97e;
+            border-color: #00d97e;
+        }
+
+        .btn-danger {
+            background-color: #e63757;
+            border-color: #e63757;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-icon i {
+            margin-right: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #506690;
+            font-size: 0.875rem;
+        }
+
+        .form-control, .form-select {
+            border-color: #e6edf5;
+            padding: 0.6rem 1rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #a6c5f7;
+            box-shadow: 0 0 0 0.25rem rgba(44, 123, 229, 0.1);
+        }
+
+        .form-text {
+            font-size: 0.75rem;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: ">";
+        }
+
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section {
+            border-bottom: 1px solid #e6edf5;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            color: #2c7be5;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 0.5rem;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-upload {
+            position: relative;
+        }
+
+        .file-upload-input {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            outline: none;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #e6edf5;
+            border-radius: 0.5rem;
+            background-color: #f8f9fa;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover .file-upload-btn {
+            border-color: #a6c5f7;
+            background-color: rgba(44, 123, 229, 0.05);
+        }
+
+        .required-label::after {
+            content: " *";
+            color: #e63757;
+        }
+
+        .no-image-placeholder {
+            height: 300px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #95aac9;
+            border-radius: 0.5rem;
+            border: 2px dashed #e6edf5;
+        }
+
+        .save-btn {
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .save-btn i {
+            margin-right: 0.5rem;
+        }
+
+        .form-actions {
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e6edf5;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-leaf me-2"></i>
+            Agro-Food Tracker
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reports</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'product_list' %}" class="text-decoration-none">Products</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'product_view' product.id %}" class="text-decoration-none">{{ product.name }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+
+    <!-- Form header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">Edit Product</h1>
+            <p class="text-muted mb-0">Update information for {{ product.name }}</p>
+        </div>
+        <div>
+            <a href="{% url 'product_view' product.id %}" class="btn btn-light btn-icon">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
+    </div>
+
+    <!-- Edit form -->
+    <div class="card">
+        <div class="card-body p-4">
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+
+                <!-- Basic Information -->
+                <div class="form-section">
+                    <h5 class="section-title">Basic Information</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="id_name" class="form-label required-label">Product Name</label>
+                            <input type="text" class="form-control {% if form.name.errors %}is-invalid{% endif %}" id="id_name" name="name" value="{{ form.name.value|default:product.name }}" required>
+                            {% if form.name.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.name.errors }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Enter a descriptive name for the product.</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_category" class="form-label required-label">Category</label>
+                            <select class="form-select {% if form.category.errors %}is-invalid{% endif %}" id="id_category" name="category" required>
+                                <option value="" {% if not form.category.value and not product.category %}selected{% endif %}>Select a category</option>
+                                <option value="Vegetables" {% if form.category.value == 'Vegetables' or product.category == 'Vegetables' %}selected{% endif %}>Vegetables</option>
+                                <option value="Fruits" {% if form.category.value == 'Fruits' or product.category == 'Fruits' %}selected{% endif %}>Fruits</option>
+                                <option value="Grains" {% if form.category.value == 'Grains' or product.category == 'Grains' %}selected{% endif %}>Grains</option>
+                                <option value="Dairy" {% if form.category.value == 'Dairy' or product.category == 'Dairy' %}selected{% endif %}>Dairy</option>
+                                <option value="Meat" {% if form.category.value == 'Meat' or product.category == 'Meat' %}selected{% endif %}>Meat</option>
+                                <option value="Other" {% if form.category.value == 'Other' or product.category == 'Other' %}selected{% endif %}>Other</option>
+                            </select>
+                            {% if form.category.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.category.errors }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Choose the most appropriate category.</div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="id_description" class="form-label">Description</label>
+                            <textarea class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="id_description" name="description" rows="4">{{ form.description.value|default:product.description }}</textarea>
+                            {% if form.description.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.description.errors }}
+                                </div>
+                            {% endif %}
+                            <div class="form-text">Provide detailed information about the product.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Information -->
+                <div class="form-section">
+                    <h5 class="section-title">Pricing Information</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="id_price" class="form-label required-label">Price ($)</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" class="form-control {% if form.price.errors %}is-invalid{% endif %}" id="id_price" name="price" value="{{ form.price.value|default:product.price }}" step="0.01" min="0" required>
+                                {% if form.price.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.price.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="form-text">Enter the price in USD.</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_discount" class="form-label">Discount (%)</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control {% if form.discount.errors %}is-invalid{% endif %}" id="id_discount" name="discount" value="{{ form.discount.value|default:'' }}" min="0" max="100">
+                                <span class="input-group-text">%</span>
+                                {% if form.discount.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.discount.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="form-text">Optional: Enter discount percentage if applicable.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Image -->
+                <div class="form-section">
+                    <h5 class="section-title">Product Image</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="image-preview mb-3" id="image-preview">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="id_delete_image" name="delete_image">
+                                    <label class="form-check-label" for="id_delete_image">
+                                        Delete current image
+                                    </label>
+                                </div>
+                            {% else %}
+                                <div class="no-image-placeholder mb-3" id="image-preview-container">
+                                    <div class="text-center">
+                                        <i class="fas fa-image fa-4x mb-3"></i>
+                                        <p>No image available</p>
+                                    </div>
+                                </div>
+                                <img src="" alt="Preview" class="image-preview mb-3 d-none" id="image-preview">
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_image" class="form-label">Upload New Image</label>
+                            <div class="file-upload mb-3">
+                                <input type="file" class="file-upload-input" id="id_image" name="image" accept="image/*">
+                                <div class="file-upload-btn">
+                                    <div class="text-center">
+                                        <i class="fas fa-cloud-upload-alt fa-2x mb-2"></i>
+                                        <p class="mb-0">Click or drag to upload image</p>
+                                        <small class="text-muted">Supports: JPG, PNG, GIF (Max 5MB)</small>
+                                    </div>
+                                </div>
+                            </div>
+                            {% if form.image.errors %}
+                                <div class="text-danger small">
+                                    {{ form.image.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information -->
+                <div class="form-section">
+                    <h5 class="section-title">Additional Information</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="id_stock" class="form-label">Stock Quantity</label>
+                            <input type="number" class="form-control" id="id_stock" name="stock" value="{{ form.stock.value|default:'' }}" min="0">
+                            <div class="form-text">Number of items available in stock.</div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="id_sku" class="form-label">SKU</label>
+                            <input type="text" class="form-control" id="id_sku" name="sku" value="{{ form.sku.value|default:'' }}">
+                            <div class="form-text">Stock Keeping Unit (unique identifier).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit buttons - Now in a more prominent section -->
+                <div class="form-actions text-center">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <button type="submit" class="btn btn-success btn-lg save-btn w-100">
+                                <i class="fas fa-save"></i> Save Product
+                            </button>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a href="{% url 'product_view' product.id %}" class="btn btn-link text-muted">
+                                    Cancel and return to product
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-white py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="text-muted mb-0">&copy; 2023 Agro-Food Tracker. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Flatpickr (date picker) -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<!-- Custom JS -->
+<script>
+    // Image preview functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageInput = document.getElementById('id_image');
+        const imagePreview = document.getElementById('image-preview');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const deleteImageCheckbox = document.getElementById('id_delete_image');
+
+        if (imageInput) {
+            imageInput.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        if (imagePreview) {
+                            imagePreview.src = e.target.result;
+                            imagePreview.classList.remove('d-none');
+
+                            if (imagePreviewContainer) {
+                                imagePreviewContainer.classList.add('d-none');
+                            }
+                        }
+                    }
+
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+
+        if (deleteImageCheckbox && imagePreview) {
+            deleteImageCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    imagePreview.classList.add('opacity-25');
+                } else {
+                    imagePreview.classList.remove('opacity-25');
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

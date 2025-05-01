@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} - Agro-Food Tracker</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: #2c7be5;
+        }
+
+        .card {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            border: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-header {
+            background-color: #fff;
+            border-bottom: 1px solid rgba(0,0,0,.05);
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background-color: #2c7be5;
+            border-color: #2c7be5;
+        }
+
+        .btn-success {
+            background-color: #00d97e;
+            border-color: #00d97e;
+        }
+
+        .btn-danger {
+            background-color: #e63757;
+            border-color: #e63757;
+        }
+
+        .btn-warning {
+            background-color: #f6c343;
+            border-color: #f6c343;
+        }
+
+        .btn-icon {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-icon i {
+            margin-right: 0.5rem;
+        }
+
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: ">";
+        }
+
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 0.5rem;
+            object-fit: cover;
+        }
+
+        .product-details-section {
+            margin-bottom: 2rem;
+        }
+
+        .product-section-title {
+            color: #2c7be5;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e6edf5;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #506690;
+        }
+
+        .category-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            background-color: #edf2f9;
+            color: #2c7be5;
+            border-radius: 0.25rem;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .price-tag {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c7be5;
+        }
+
+        .price-tag small {
+            font-size: 1rem;
+            color: #95aac9;
+            text-decoration: line-through;
+        }
+
+        .discount-badge {
+            background-color: #00d97e;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            margin-left: 0.5rem;
+        }
+
+        .no-image-placeholder {
+            height: 300px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #95aac9;
+            border-radius: 0.5rem;
+            border: 2px dashed #e6edf5;
+        }
+
+        .action-buttons {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            z-index: 10;
+        }
+
+        .action-buttons .btn {
+            width: 40px;
+            height: 40px;
+            padding: 0;
+            line-height: 40px;
+            text-align: center;
+            margin-left: 0.5rem;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .action-buttons .btn i {
+            margin-right: 0;
+        }
+
+        .info-card {
+            height: 100%;
+        }
+
+        .info-icon {
+            font-size: 1.5rem;
+            color: #2c7be5;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-value {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .info-label {
+            color: #95aac9;
+            font-size: 0.875rem;
+        }
+
+        .product-description {
+            white-space: pre-line;
+            color: #506690;
+        }
+
+        .table-specs th {
+            width: 30%;
+            color: #506690;
+            font-weight: 600;
+        }
+
+        .related-product-card {
+            transition: transform 0.3s ease;
+        }
+
+        .related-product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .related-product-img {
+            height: 160px;
+            object-fit: cover;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+        }
+
+        .unavailable-badge {
+            background-color: #e63757;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .stock-badge {
+            background-color: #00d97e;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .low-stock-badge {
+            background-color: #f6c343;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-leaf me-2"></i>
+            Agro-Food Tracker
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Categories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Reports</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mb-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'product_list' %}" class="text-decoration-none">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+        </ol>
+    </nav>
+
+    <!-- Product header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">
+                {{ product.name }}
+                <span class="category-badge">{{ product.category }}</span>
+
+                {% if product.stock is not None %}
+                    {% if product.stock == 0 %}
+                        <span class="unavailable-badge">Out of Stock</span>
+                    {% elif product.stock < 10 %}
+                        <span class="low-stock-badge">Low Stock: {{ product.stock }}</span>
+                    {% else %}
+                        <span class="stock-badge">In Stock: {{ product.stock }}</span>
+                    {% endif %}
+                {% endif %}
+            </h1>
+            <p class="text-muted mb-0">ID: {{ product.id }} | Added on {{ product.created_at|date:"M d, Y" }}</p>
+        </div>
+        <div>
+            <a href="{% url 'product_edit' product.id %}" class="btn btn-primary btn-icon">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-icon ms-2">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Left column: Product image and price -->
+        <div class="col-lg-5">
+            <div class="card position-relative">
+                <div class="card-body p-0">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-image">
+                    {% else %}
+                        <div class="no-image-placeholder">
+                            <div class="text-center">
+                                <i class="fas fa-image fa-4x mb-3"></i>
+                                <p>No image available</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Pricing Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="detail-label">Current Price:</span>
+                        <div class="ms-auto price-tag">
+                            {% if product.discount %}
+                                ${{ product.discounted_price|floatformat:2 }}
+                                <small>${{ product.price|floatformat:2 }}</small>
+                                <span class="discount-badge">{{ product.discount }}% OFF</span>
+                            {% else %}
+                                ${{ product.price|floatformat:2 }}
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if product.discount %}
+                        <div class="d-flex align-items-center">
+                            <span class="detail-label">You Save:</span>
+                            <div class="ms-auto text-success">
+                                ${{ product.savings|floatformat:2 }}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right column: Product details -->
+        <div class="col-lg-7">
+            <!-- Basic Information -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Product Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="product-description mb-4">
+                        {{ product.description|default:"No description provided." }}
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card info-card">
+                                <div class="card-body text-center">
+                                    <div class="info-icon">
+                                        <i class="fas fa-tag"></i>
+                                    </div>
+                                    <div class="info-value">{{ product.category }}</div>
+                                    <div class="info-label">Category</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if product.stock is not None %}
+                            <div class="col-md-6">
+                                <div class="card info-card">
+                                    <div class="card-body text-center">
+                                        <div class="info-icon">
+                                            <i class="fas fa-cubes"></i>
+                                        </div>
+                                        <div class="info-value">{{ product.stock }}</div>
+                                        <div class="info-label">Stock Quantity</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Information Section -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Additional Information</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-specs mb-0">
+                        <tbody>
+                        {% if product.sku %}
+                            <tr>
+                                <th>SKU</th>
+                                <td>{{ product.sku }}</td>
+                            </tr>
+                        {% endif %}
+
+                        <tr>
+                            <th>Last Updated</th>
+                            <td>{{ product.updated_at|date:"M d, Y at H:i" }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Created</th>
+                            <td>{{ product.created_at|date:"M d, Y at H:i" }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>Product ID</th>
+                            <td>{{ product.id }}</td>
+                        </tr>
+
+                        {% if product.discount %}
+                            <tr>
+                                <th>Discount</th>
+                                <td>{{ product.discount }}%</td>
+                            </tr>
+                        {% endif %}
+
+                        <!-- Add more product attributes as needed -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Management Actions -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Management Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-2">
+                        <div class="col-md-4">
+                            <a href="{% url 'product_edit' product.id %}" class="btn btn-primary btn-icon w-100">
+                                <i class="fas fa-edit"></i> Edit Product
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="#" class="btn btn-warning btn-icon w-100">
+                                <i class="fas fa-tags"></i> Manage Pricing
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="{% url 'product_delete' product.id %}" class="btn btn-danger btn-icon w-100">
+                                <i class="fas fa-trash"></i> Delete Product
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products (if available)
+        <div class="mt-5">
+            <h2 class="h4 mb-4">Related Products</h2>
+            <div class="row g-4">
+                {% for i in "123"|make_list %}
+                <div class="col-md-4">
+                    <div class="card related-product-card">
+                        <img src="https://via.placeholder.com/400x250" class="related-product-img" alt="Product Name">
+                        <div class="card-body">
+                            <h5 class="card-title">Related Product {{ i }}</h5>
+                            <p class="text-muted small">Category Name</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="fw-bold">${{ forloop.counter0|add:10 }}.99</span>
+                                <a href="#" class="btn btn-sm btn-outline-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        -->
+</div>
+
+<!-- Footer -->
+<footer class="bg-white py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="text-muted mb-0">&copy; 2023 Agro-Food Tracker. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
