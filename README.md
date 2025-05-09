@@ -65,13 +65,13 @@ Quality_Tracker/
 ## 📸 Screenshots
 
 ### Product Dashboard
-![Dashboard](https://your-dashboard-screenshot-url-here.png)
+![Dashboard](https://github.com/xSSanDev/Quality_Tracker/blob/master/product_Dashboard.png)
 
 ### Product Creation
-![Product Creation](https://your-product-creation-screenshot-url-here.png)
+![Product Creation](https://github.com/xSSanDev/Quality_Tracker/blob/master/product_creation.png)
 
 ### Product Detail View
-![Product Detail](https://your-product-detail-screenshot-url-here.png)
+![Product Detail](https://github.com/xSSanDev/Quality_Tracker/blob/master/detailed_view.png)
 
 ## 🌟 Key Functionalities
 
