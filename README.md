@@ -61,48 +61,6 @@ Quality_Tracker/
 └── requirements.txt             # Project dependencies
 ```
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Python 3.6 or higher
-- pip (Python package manager)
-
-### Installation
-
-1. Clone the repository:
-   ```
-   git clone https://github.com/xSSanDev/Quality_Tracker.git
-   cd Quality_Tracker
-   ```
-
-2. Create a virtual environment and activate it:
-   ```
-   python -m venv env
-   source env/bin/activate  # On Windows, use: env\Scripts\activate
-   ```
-
-3. Install dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
-
-4. Run migrations:
-   ```
-   python manage.py migrate
-   ```
-
-5. Create a superuser (for admin access):
-   ```
-   python manage.py createsuperuser
-   ```
-
-6. Start the development server:
-   ```
-   python manage.py runserver
-   ```
-
-7. Access the application at http://127.0.0.1:8000/
 
 ## 📸 Screenshots
 
