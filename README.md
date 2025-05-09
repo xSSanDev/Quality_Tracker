@@ -1,6 +1,6 @@
 # Agro-Food Tracker
 
-![Agro-Food Tracker Logo](https://your-logo-url-here.png)
+![Agro-Food Tracker Logo](Firefly Design a modern and professional logo for a digital platform called 'Agro-Food Tracker'. The (1).jpg)
 
 ## 🌱 About the Project
 
