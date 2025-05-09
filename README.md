@@ -1,6 +1,6 @@
 # Agro-Food Tracker
 
-![Agro-Food Tracker Logo]([Firefly(https://github.com/xSSanDev/Quality_Tracker/blob/master/Firefly%20Design%20a%20modern%20and%20professional%20logo%20for%20a%20digital%20platform%20called%20'Agro-Food%20Tracker'.%20The%20(1).jpg))
+![Agro-Food Tracker Logo](https://github.com/xSSanDev/Quality_Tracker/blob/master/Logo.jpg)
 
 ## 🌱 About the Project
 
